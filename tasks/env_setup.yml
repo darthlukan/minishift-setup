@@ -1,0 +1,53 @@
+---
+- name: Install deps
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ deps }}"
+
+- name: Add user to libvirt group
+  user:
+    name: "{{ username }}"
+    append: yes
+    groups: libvirt
+    state: present
+
+- name: Make sure libvirtd is running
+  service:
+    name: libvirtd
+    state: started
+
+- name: Check libvirt networking autostart
+  shell: virsh net-list --all | grep default | awk '{print $3}'
+  register: virsh_autostart
+
+- name: Check libvirt networking active
+  shell: virsh net-list --all | grep default | awk '{print $2}'
+  register: virsh_active
+
+- name: Start libvirt networking
+  command: virsh net-start default
+  when: virsh_active.stdout == 'inactive'
+
+- name: Set libvirt networking autostart
+  command: virsh net-autostart default
+  when: virsh_autostart == 'no'
+
+- name: Get minishift {{ minishift_version }}
+  get_url:
+      url: https://github.com/minishift/minishift/releases/download/v{{minishift_version }}/minishift-{{ minishift_version }}-linux-amd64.tgz
+      dest: /tmp
+      mode: 0777
+
+- name: Extract archive
+  unarchive:
+    src: /tmp/minishift-{{ minishift_version }}-linux-amd64.tgz
+    dest: /tmp
+    mode: 0777
+
+- name: Move minishift to bin
+  copy:
+    src: /tmp/minishift-{{ minishift_version }}-linux-amd64/minishift
+    dest: /home/{{ username }}/bin
+    mode: 0755
+...

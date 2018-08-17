@@ -1,0 +1,7 @@
+---
+username: $USERNAME  # <- Replace with username
+minishift_version: 1.22.0
+deps:
+  - libvirt
+  - qemu-kvm
+...
