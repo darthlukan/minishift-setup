@@ -18,6 +18,23 @@ to ensure that `~/bin` exists and is added to their `$PATH`.
 3. SSH properly configured
 4. Sudo access
 
+## Installation
+
+```
+$ ansible-galaxy install darthlukan.minishift_setup
+```
+
+## Example playbook
+
+```yaml
+---
+- name: Setup and install Minishift
+  hosts: localhost
+  roles:
+    - role: roles/darthlukan.minishift_setup
+      username: $USERNAME
+...
+```
 
 ## License
 
