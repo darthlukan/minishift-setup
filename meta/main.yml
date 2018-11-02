@@ -1,0 +1,25 @@
+---
+galaxy_info:
+  author: Brian Tomlinson
+  description: "A simple Ansible role that sets up minishift dependencies and installs minishift on a Fedora / CentOS / RHEL system. "
+  company: Red Hat
+  license: GPLv3
+  min_ansible_version: 1.2
+  github_branch: master
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+    - name: RHEL
+      versions:
+        - all
+    - name: CentOS
+      versions:
+        - all
+
+  galaxy_tags:
+    - "minishift"
+    - "openshift"
+
+dependecies: []
+...
