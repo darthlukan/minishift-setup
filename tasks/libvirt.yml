@@ -18,6 +18,7 @@
   service:
     name: libvirtd
     state: started
+  become: yes
 
 - name: Check libvirt networking autostart
   shell: virsh net-list --all | grep default | awk '{print $3}'
