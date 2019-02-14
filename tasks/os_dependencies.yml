@@ -1,0 +1,8 @@
+---
+- name: Install OS dependencies
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ os_dependencies }}"
+  become: yes
+...
