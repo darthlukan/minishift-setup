@@ -1,30 +1,29 @@
-# Minishift Setup
+# Minishift Set-up
 
 Author: Brian Tomlinson <btomlins@redhat.com> / <darthlukan@gmail.com>
-
 
 ## Description
 
 A simple [Ansible](https://www.ansible.com) role which prepares a Fedora environment for [Minishift](https://github.com/minishift/minishift).
 
-After using this role, the Minishift binary will reside in the user's `~/bin` directory. It is left up to the user
-to ensure that `~/bin` exists and is added to their `$PATH`.
+After using this role, the Minishift binary will be available on the OS and added to `$PATH`.
 
-
-## Pre-requisits
+## Pre-requisites
 
 1. Fedora / CentOS / RHEL system
-2. Ansible 2.6.x
-3. SSH properly configured
-4. Sudo access
+1. Ansible 2.6.x
+1. SSH properly configured
+1. Sudo access
 
 ## Installation
 
-```
+### From Ansible galaxy
+
+```bash
 $ ansible-galaxy install darthlukan.minishift_setup
 ```
 
-## Example playbook
+#### Example playbook
 
 ```yaml
 ---
@@ -32,7 +31,25 @@ $ ansible-galaxy install darthlukan.minishift_setup
   hosts: localhost
   roles:
     - role: roles/darthlukan.minishift_setup
-      username: $USERNAME
+...
+```
+
+### From GitHub
+
+```bash
+$ git clone https://github.com/darthlukan/minishift-setup
+$ cd minishift-setup
+$ ./minishift_setup.sh
+```
+
+#### Example playbook
+
+```yaml
+---
+- name: Setup and install Minishift
+  hosts: localhost
+  roles:
+    - role: minishift-setup
 ...
 ```
 

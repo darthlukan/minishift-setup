@@ -1,0 +1,38 @@
+---
+- name: Get current user
+  command: whoami
+  register: output
+
+- name: Add user to libvirt group
+  user:
+    name: "{{ output.stdout }}"
+    append: yes
+    groups: libvirt
+    state: present
+  become: yes
+
+- name: Refresh user groups
+  shell: newgrp libvirt
+
+- name: Make sure libvirtd is running
+  service:
+    name: libvirtd
+    state: started
+  become: yes
+
+- name: Check libvirt networking autostart
+  shell: virsh net-list --all | grep default | awk '{print $3}'
+  register: virsh_autostart
+
+- name: Check libvirt networking active
+  shell: virsh net-list --all | grep default | awk '{print $2}'
+  register: virsh_active
+
+- name: Start libvirt networking
+  command: virsh net-start default
+  when: virsh_active.stdout == 'inactive'
+
+- name: Set libvirt networking autostart
+  command: virsh net-autostart default
+  when: virsh_autostart == 'no'
+...

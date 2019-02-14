@@ -1,3 +1,6 @@
 ---
-- include: env_setup.yml
+- include: os_dependencies.yml
+- include: docker_machine.yml
+- include: libvirt.yml
+- include: minishift.yml
 ...

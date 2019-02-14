@@ -1,7 +1,10 @@
 ---
-username: $USERNAME  # <- Replace with username
-minishift_version: 1.22.0
-deps:
+minishift_version: 1.31.0
+docker_machine_version: 0.16.1
+docker_machine_kvm_version: 0.8.2
+bin_dir: /usr/local/bin
+os_dependencies:
+  - docker
   - libvirt
   - qemu-kvm
 ...

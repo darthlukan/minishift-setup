@@ -1,0 +1,18 @@
+---
+- shell: echo $(uname -s)-$(uname -m)
+  register: output
+
+- name: Install docker_machine
+  get_url:
+    url: https://github.com/docker/machine/releases/download/v{{docker_machine_version}}/docker-machine-{{ output.stdout }}
+    dest: "{{ bin_dir }}/docker-machine"
+    mode: 0755
+  become: yes
+
+- name: Install docker-machine-kvm
+  get_url:
+    url: https://github.com/dhiltgen/docker-machine-kvm/releases/download/v{{docker_machine_kvm_version}}/docker-machine-driver-kvm
+    dest: "{{ bin_dir }}/docker-machine-driver-kvm"
+    mode: 0755
+  become: yes
+...
