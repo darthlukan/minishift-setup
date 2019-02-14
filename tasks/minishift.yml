@@ -1,7 +1,6 @@
 ---
 - shell: echo $(uname -s)
   register: output
-- debug: var=output.stdout
 
 - name: Get minishift {{ minishift_version }}
   get_url:
